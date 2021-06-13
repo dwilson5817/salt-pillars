@@ -8,13 +8,13 @@ munin_node:
   user: root
   group: root
   ignore_file:
-    - [\#~]$
-    - DEADJOE$
-    - \.bak$
-    - %$
-    - \.dpkg-(tmp|new|old|dist)$
-    - \.rpm(save|new)$
-    - \.pod$
+    - "[\\#~]$"
+    - "DEADJOE$"
+    - "\\.bak$"
+    - "%$"
+    - "\\.dpkg-(tmp|new|old|dist)$"
+    - "\\.rpm(save|new)$"
+    - "\\.pod$"
   host_name: {{ grains['host'] }}
   allow:
     - ^51\.255\.143\.146$
