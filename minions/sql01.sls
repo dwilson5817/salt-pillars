@@ -3,38 +3,38 @@
 users:
   antrim:
     password: {{ sql_passwords.antrim }}
-    host: %
+    host: "%"
     is_admin: False
     databases:
       - website
   dwlnco:
     password: {{ sql_passwords.dwlnco }}
-    host: %
+    host: "%"
     is_admin: False
     databases:
       - website
   dylanw:
     password: {{ sql_passwords.dylanw }}
-    host: %
+    host: "%"
     is_admin: False
     databases:
       - power-claim
   miners:
     password: {{ sql_passwords.miners }}
-    host: %
+    host: "%"
     is_admin: False
     databases:
       - server
       - website
   muckam:
     password: {{ sql_passwords.muckam }}
-    host: %
+    host: "%"
     is_admin: False
     databases:
       - website
   multic:
     password: {{ sql_passwords.multic }}
-    host: %
+    host: "%"
     is_admin: False
     databases:
       - daemon
