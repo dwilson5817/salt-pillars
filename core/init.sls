@@ -1,5 +1,9 @@
 ---
 {%- set dns_cloudflare = salt['vault.read_secret']('salt/data/dns-cloudflare') %}
+docker:
+  pkg:
+    docker:
+      use_upstream: repo
 letsencrypt:
   use_package: true
   pkgs:
