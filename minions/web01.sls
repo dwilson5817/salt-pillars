@@ -24,7 +24,7 @@ nginx:
               - listen:
                   - '[::]:443 ssl'
                   - '443 ssl'
-              - ssl_certificate: '/etc/letsencrypt/live/minersrealm.net/fullchain.pem'
-              - ssl_certificate_key: '/etc/letsencrypt/live/minersrealm.net/privkey.pem'
+              - ssl_certificate: '/etc/letsencrypt/live/panel.minersrealm.net/fullchain.pem'
+              - ssl_certificate_key: '/etc/letsencrypt/live/panel.minersrealm.net/privkey.pem'
               - include: '/etc/letsencrypt/options-ssl-nginx.conf'
               - ssl_dhparam: '/etc/letsencrypt/ssl-dhparams.pem'
