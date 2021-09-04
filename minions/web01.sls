@@ -1,4 +1,8 @@
 ---
+node:
+  pkg:
+    version: 14
+    use_upstream_repo: true
 sites:
   dwln.co:
     - www
