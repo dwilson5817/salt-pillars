@@ -63,6 +63,45 @@ nginx:
       minersrealm.net:
         enabled: true
         config:
+          - server:
+              - listen:
+                  - '[::]:80'
+                  - 80
+              - server_name: www.minersrealm.net minersrealm.net
+              - location /:
+                  - return: 301 https://$host$request_uri
+          - server:
+              - listen:
+                  - '[::]:443 ssl http2'
+                  - 443 ssl http2
+              - server_name: www.minersrealm.net minersrealm.net
+              - root: /srv/www/minersrealm.net/www
+              - index: index.php
+              - client_max_body_size: 100m
+              - client_body_timeout: 120s
+              - sendfile: 'off'
+              - ssl_certificate: /etc/letsencrypt/live/minersrealm.net/fullchain.pem
+              - ssl_certificate_key: /etc/letsencrypt/live/minersrealm.net/privkey.pem
+              - ssl_session_cache: shared:SSL:10m
+              - ssl_protocols: TLSv1.2 TLSv1.3
+              - ssl_ciphers: '"ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384"'
+              - ssl_prefer_server_ciphers: 'on'
+              - location /:
+                  - try_files: '$uri $uri/ /index.php?route=$uri&$args'
+              - location ~ [^/]\.php(/|$):
+                  - fastcgi_split_path_info: '^(.+?\.php)(/.*)$'
+                  - if (!-f $document_root$fastcgi_script_name):
+                      - return: 404
+                  - fastcgi_param: SCRIPT_FILENAME $document_root$fastcgi_script_name
+                  - fastcgi_param: HTTP_PROXY ""
+                  - fastcgi_pass: unix:/run/php/php-fpm.sock
+                  - fastcgi_index: index.php
+                  - include: fastcgi_params
+              - location ~ /\.ht:
+                  - deny: all
+              - location ~ \.(tpl|cache)$:
+                  - return: 403
+              - add_header: X-Frame-Options "SAMEORIGIN"
           - server_tokens: 'off'
           - server:
               - listen:
