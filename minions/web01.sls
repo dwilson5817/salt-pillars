@@ -6,6 +6,12 @@ node:
 sites:
   dwln.co:
     - www
+  dylanw.net:
+    - www
+  dylanwilson.co.uk:
+    - www
+  dylanwilson.uk:
+    - www
   minersrealm.net:
     - www
     - panel
@@ -60,6 +66,96 @@ nginx:
                   - include: fastcgi_params
               - location ~ /\.(?!well-known).*:
                   - deny: all
+      dylanw.net:
+        enabled: true
+        config:
+          - server:
+              - listen:
+                  - '[::]:80'
+                  - 80
+              - server_name: dylanw.net www.dylanw.net
+              - location /:
+                  - return: 301 https://www.dylanwilson.dev$request_uri
+          - server:
+              - listen:
+                  - '[::]:443 ssl http2'
+                  - 443 ssl http2
+              - server_name: dylanw.net www.dylanw.net
+              - location /:
+                  - return: 301 https://www.dylanwilson.dev$request_uri
+              - ssl_certificate: /etc/letsencrypt/live/dylanw.net/fullchain.pem
+              - ssl_certificate_key: /etc/letsencrypt/live/dylanw.net/privkey.pem
+              - ssl_session_timeout: 1d
+              - ssl_session_cache: shared:MozSSL:10m
+              - ssl_session_tickets: 'off'
+              - ssl_dhparam: /etc/letsencrypt/ssl-dhparams.pem
+              - ssl_protocols: TLSv1.2 TLSv1.3
+              - ssl_ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+              - ssl_prefer_server_ciphers: 'off'
+              - add_header: Strict-Transport-Security "max-age=63072000" always
+              - ssl_stapling: 'on'
+              - ssl_stapling_verify: 'on'
+              - ssl_trusted_certificate: /etc/letsencrypt/live/dylanw.net/chain.pem
+      dylanwilson.co.uk:
+        enabled: true
+        config:
+          - server:
+              - listen:
+                  - '[::]:80'
+                  - 80
+              - server_name: dylanwilson.co.uk www.dylanwilson.co.uk
+              - location /:
+                  - return: 301 https://www.dylanwilson.dev$request_uri
+          - server:
+              - listen:
+                  - '[::]:443 ssl http2'
+                  - 443 ssl http2
+              - server_name: dylanwilson.co.uk www.dylanwilson.co.uk
+              - location /:
+                  - return: 301 https://www.dylanwilson.dev$request_uri
+              - ssl_certificate: /etc/letsencrypt/live/dylanw.net/fullchain.pem
+              - ssl_certificate_key: /etc/letsencrypt/live/dylanw.net/privkey.pem
+              - ssl_session_timeout: 1d
+              - ssl_session_cache: shared:MozSSL:10m
+              - ssl_session_tickets: 'off'
+              - ssl_dhparam: /etc/letsencrypt/ssl-dhparams.pem
+              - ssl_protocols: TLSv1.2 TLSv1.3
+              - ssl_ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+              - ssl_prefer_server_ciphers: 'off'
+              - add_header: Strict-Transport-Security "max-age=63072000" always
+              - ssl_stapling: 'on'
+              - ssl_stapling_verify: 'on'
+              - ssl_trusted_certificate: /etc/letsencrypt/live/dylanw.net/chain.pem
+      dylanwilson.uk:
+        enabled: true
+        config:
+          - server:
+              - listen:
+                  - '[::]:80'
+                  - 80
+              - server_name: dylanwilson.uk www.dylanwilson.uk
+              - location /:
+                  - return: 301 https://www.dylanwilson.dev$request_uri
+          - server:
+              - listen:
+                  - '[::]:443 ssl http2'
+                  - 443 ssl http2
+              - server_name: dylanwilson.uk www.dylanwilson.uk
+              - location /:
+                  - return: 301 https://www.dylanwilson.dev$request_uri
+              - ssl_certificate: /etc/letsencrypt/live/dylanwilson.uk/fullchain.pem
+              - ssl_certificate_key: /etc/letsencrypt/live/dylanwilson.uk/privkey.pem
+              - ssl_session_timeout: 1d
+              - ssl_session_cache: shared:MozSSL:10m
+              - ssl_session_tickets: 'off'
+              - ssl_dhparam: /etc/letsencrypt/ssl-dhparams.pem
+              - ssl_protocols: TLSv1.2 TLSv1.3
+              - ssl_ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+              - ssl_prefer_server_ciphers: 'off'
+              - add_header: Strict-Transport-Security "max-age=63072000" always
+              - ssl_stapling: 'on'
+              - ssl_stapling_verify: 'on'
+              - ssl_trusted_certificate: /etc/letsencrypt/live/dylanwilson.uk/chain.pem
       minersrealm.net:
         enabled: true
         config:
