@@ -4,6 +4,8 @@ node:
     version: 14
     use_upstream_repo: true
 sites:
+  antrimtiling.com:
+    - www
   dwln.co:
     - www
   dylanw.net:
@@ -18,6 +20,53 @@ sites:
 nginx:
   servers:
     managed:
+      antrimtiling.com:
+        enabled: true
+        config:
+          - server:
+              - listen:
+                  - '[::]:80'
+                  - 80
+              - server_name: antrimtiling.com www.antrimtiling.com
+              - location /:
+                  - return: 301 https://$host$request_uri
+          - server:
+              - listen:
+                  - '[::]:443 ssl http2'
+                  - 443 ssl http2
+              - server_name: antrimtiling.com www.antrimtiling.com
+              - root: /srv/www/antrimtiling.com/www
+              - index: index.php
+              - ssl_certificate: /etc/letsencrypt/live/antrimtiling.com/fullchain.pem
+              - ssl_certificate_key: /etc/letsencrypt/live/antrimtiling.com/privkey.pem
+              - ssl_session_timeout: 1d
+              - ssl_session_cache: shared:MozSSL:10m
+              - ssl_session_tickets: 'off'
+              - ssl_dhparam: /etc/letsencrypt/ssl-dhparams.pem
+              - ssl_protocols: TLSv1.2 TLSv1.3
+              - ssl_ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+              - ssl_prefer_server_ciphers: 'off'
+              - add_header: Strict-Transport-Security "max-age=63072000" always
+              - ssl_stapling: 'on'
+              - ssl_stapling_verify: 'on'
+              - ssl_trusted_certificate: /etc/letsencrypt/live/antrimtiling.com/chain.pem
+              - location = /favicon.ico:
+                  - log_not_found: 'off'
+                  - access_log: 'off'
+              - location = /robots.txt:
+                  - allow: all
+                  - log_not_found: 'off'
+                  - access_log: 'off'
+              - location /:
+                  - try_files: '$uri $uri/ /index.php?$args'
+              - location ~ \.php$:
+                  - include: fastcgi_params
+                  - fastcgi_intercept_errors: 'on'
+                  - fastcgi_pass: unix:/run/php/php8.0-fpm.sock
+                  - fastcgi_param:  SCRIPT_FILENAME $document_root$fastcgi_script_name
+              - location ~* \.(js|css|png|jpg|jpeg|gif|ico)$:
+                  - expires: max
+                  - log_not_found: 'off'
       dwln.co:
         enabled: true
         config:
