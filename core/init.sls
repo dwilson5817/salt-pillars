@@ -4,9 +4,6 @@ docker:
   pkg:
     docker:
       use_upstream: repo
-      daemon_config:
-        ipv6: true
-        fixed-cidr-v6: fd00::/80
 letsencrypt:
   use_package: true
   pkgs:
