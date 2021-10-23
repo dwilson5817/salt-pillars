@@ -1,7 +1,9 @@
 ---
 base:
-  "*":
+  '*':
     - core
+  'runner*':
+    - runner
   salt01:
     - minions.salt01
   sql01:
