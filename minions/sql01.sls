@@ -18,6 +18,7 @@ users:
     host: '%'
     is_admin: false
     databases:
+      - muckamore-credit-union-website
       - power-claim
   miners:
     password: {{ sql_passwords.miners }}
