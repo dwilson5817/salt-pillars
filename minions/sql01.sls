@@ -18,6 +18,7 @@ users:
     host: '%'
     is_admin: false
     databases:
+      - halloween-voting-system
       - muckamore-credit-union-website
       - power-claim
   miners:

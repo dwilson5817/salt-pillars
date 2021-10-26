@@ -195,6 +195,51 @@ nginx:
                   - include: fastcgi_params
               - location ~ /\.(?!well-known).*:
                   - deny: all
+          - server:
+              - listen:
+                  - '[::]:80'
+                  - 80
+              - server_name: halloween-vote.dylanwilson.dev
+              - location /:
+                  - return: 301 https://$host$request_uri
+          - server:
+              - listen:
+                  - '[::]:443 ssl http2'
+                  - 443 ssl http2
+              - server_name: halloween-vote.dylanwilson.dev
+              - root: /srv/www/dylanwilson.dev/halloween-vote/public
+              - add_header: X-Frame-Options "SAMEORIGIN"
+              - add_header: X-Content-Type-Options "nosniff"
+              - index: index.php
+              - charset: utf-8
+              - ssl_certificate: /etc/letsencrypt/live/dylanwilson.dev/fullchain.pem
+              - ssl_certificate_key: /etc/letsencrypt/live/dylanwilson.dev/privkey.pem
+              - ssl_session_timeout: 1d
+              - ssl_session_cache: shared:MozSSL:10m
+              - ssl_session_tickets: 'off'
+              - ssl_dhparam: /etc/letsencrypt/ssl-dhparams.pem
+              - ssl_protocols: TLSv1.2 TLSv1.3
+              - ssl_ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+              - ssl_prefer_server_ciphers: 'off'
+              - add_header: Strict-Transport-Security "max-age=63072000" always
+              - ssl_stapling: 'on'
+              - ssl_stapling_verify: 'on'
+              - ssl_trusted_certificate: /etc/letsencrypt/live/dylanwilson.dev/chain.pem
+              - location /:
+                  - try_files: '$uri $uri/ /index.php?$query_string'
+              - location = /favicon.ico:
+                  - access_log: 'off'
+                  - log_not_found: 'off'
+              - location = /robots.txt:
+                  - access_log: 'off'
+                  - log_not_found: 'off'
+              - error_page: 404 /index.php
+              - location ~ \.php$:
+                  - fastcgi_pass: unix:/run/php/php8.0-fpm.sock
+                  - fastcgi_param: SCRIPT_FILENAME $realpath_root$fastcgi_script_name
+                  - include: fastcgi_params
+              - location ~ /\.(?!well-known).*:
+                  - deny: all
       dylanwilson.co.uk:
         enabled: true
         config:
