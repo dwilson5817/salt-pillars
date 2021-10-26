@@ -11,6 +11,7 @@ sites:
   dylanw.net:
     - www
   dylanwilson.dev:
+    - halloween-vote
     - muckamore-credit-union
   dylanwilson.co.uk:
     - www
