@@ -1,5 +1,6 @@
 ---
 {%- set dns_cloudflare = salt['vault.read_secret']('salt/data/dns-cloudflare') %}
+{%- set nfs_mounts = salt['vault.read_secret']('salt/data/nfs-mounts') %}
 docker:
   pkg:
     docker:
@@ -36,3 +37,6 @@ munin_node:
     - ^::1$
   host: "*"
   port: 4949
+nfs_mounts:
+  ftpback-rbx2-173.ovh.net:
+    remote_directory: /export/ftpbackup/ns3101335.ip-54-36-122.eu
