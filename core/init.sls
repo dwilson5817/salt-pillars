@@ -1,6 +1,5 @@
 ---
 {%- set dns_cloudflare = salt['vault.read_secret']('salt/data/dns-cloudflare') %}
-{%- set nfs_mounts = salt['vault.read_secret']('salt/data/nfs-mounts') %}
 docker:
   pkg:
     docker:
